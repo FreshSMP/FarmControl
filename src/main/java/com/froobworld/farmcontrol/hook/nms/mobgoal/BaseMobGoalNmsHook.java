@@ -99,7 +99,6 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
             if (!foundField) {
                 compatible = false; // couldn't find a matching field
             }
-
         } catch (ClassNotFoundException ignored) {
         }
     }
@@ -135,6 +134,7 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
             }
         } catch (Exception ignored) {
         }
+
         if (randomMovementGoalClasses.isEmpty()) {
             compatible = false; // none of our random movement classes exist
         }
