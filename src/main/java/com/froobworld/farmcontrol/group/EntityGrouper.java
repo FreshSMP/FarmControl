@@ -11,7 +11,7 @@ public class EntityGrouper {
         for (SnapshotEntity entity : entities) {
             resultBuilder.addEntity(entity);
         }
+
         return resultBuilder.build();
     }
-
 }

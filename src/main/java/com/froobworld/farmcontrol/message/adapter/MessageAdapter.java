@@ -5,5 +5,4 @@ import org.bukkit.entity.Player;
 public interface MessageAdapter {
 
     void sendMessage(Player player, String messageKey);
-
 }

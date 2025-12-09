@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProfileManager {
+
     private final FarmControl farmControl;
     private final Map<String, ActionProfile> actionProfileMap = new HashMap<>();
 
@@ -31,6 +32,7 @@ public class ProfileManager {
             file.getParentFile().mkdirs();
             Files.copy(Objects.requireNonNull(farmControl.getResource("resources/profiles.yml")), file.toPath());
         }
+
         ConfigurationSection profilesSection = YamlConfiguration.loadConfiguration(file).getConfigurationSection("profiles");
         for (String name : Objects.requireNonNull(profilesSection).getKeys(false)) {
             try {
@@ -43,20 +45,24 @@ public class ProfileManager {
                         farmControl.getLogger().warning("Unknown action for profile '" + name + "': '" + actionName.toLowerCase() + "'");
                         continue;
                     }
+
                     Set<String> incompatibleCategories = new HashSet<>();
                     for (EntityCategory memberCategory : groupDefinition.getMemberCategories()) {
                         if (!memberCategory.isCompatibleWith(action)) {
                             incompatibleCategories.add(memberCategory.getName());
                         }
                     }
+
                     if (!incompatibleCategories.isEmpty()) {
                         String incompatibleCategoriesString = incompatibleCategories.stream()
                                 .map(Object::toString)
                                 .collect(Collectors.joining(", "));
                         farmControl.getLogger().warning("Note: action '" + actionName + "' in profile '" + name + "' is incompatible with the following entity types: " + incompatibleCategoriesString);
                     }
+
                     actions.add(action);
                 }
+
                 actionProfileMap.put(name, new ActionProfile(groupDefinition, actions));
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -69,5 +75,4 @@ public class ProfileManager {
         actionProfileMap.clear();
         load();
     }
-
 }

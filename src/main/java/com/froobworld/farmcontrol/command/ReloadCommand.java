@@ -8,7 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class ReloadCommand implements CommandExecutor {
-    private FarmControl farmControl;
+
+    private final FarmControl farmControl;
 
     public ReloadCommand(FarmControl farmControl) {
         this.farmControl = farmControl;
@@ -23,6 +24,7 @@ public class ReloadCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Encountered an error reloading the plugin, see console for details.");
             e.printStackTrace();
         }
+
         return true;
     }
 }

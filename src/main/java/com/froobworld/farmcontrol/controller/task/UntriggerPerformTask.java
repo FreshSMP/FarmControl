@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class UntriggerPerformTask implements Runnable {
+
     private final SchedulerHook schedulerHook;
     private final Map<SnapshotEntity, Set<TriggerActionPair>> actionsToUndo;
 
@@ -27,19 +28,21 @@ public class UntriggerPerformTask implements Runnable {
                 if (!(entity instanceof Mob mob) || !entity.isValid()) {
                     return;
                 }
+
                 FcData fcData = FcData.get(entity);
                 if (fcData == null) {
                     return;
                 }
+
                 for (TriggerActionPair triggerActionPair : actionsToUndo.get(snapshotEntity)) {
                     if (fcData.remove(triggerActionPair.trigger, triggerActionPair.action)) {
                         triggerActionPair.action.undoAction(mob);
                     }
                 }
+
                 fcData.save(entity);
                 FcData.removeIfEmpty(entity);
             }, null, entity);
         }
     }
-
 }

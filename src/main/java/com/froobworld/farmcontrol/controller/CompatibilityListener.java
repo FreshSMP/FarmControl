@@ -17,6 +17,7 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 
 public class CompatibilityListener implements Listener {
+
     private final FarmControl farmControl;
     private final FarmController farmController;
 
@@ -28,16 +29,14 @@ public class CompatibilityListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        Actioner.undoActions(event.getRightClicked(), action -> {
-            return farmControl.getFcConfig().worldSettings.of(event.getRightClicked().getWorld()).actionSettings.undoOn.of(action).interact.get();
-        }, farmControl);
+        Actioner.undoActions(event.getRightClicked(), action ->
+              farmControl.getFcConfig().worldSettings.of(event.getRightClicked().getWorld()).actionSettings.undoOn.of(action).interact.get(), farmControl);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        Actioner.undoActions(event.getEntity(), action -> {
-            return farmControl.getFcConfig().worldSettings.of(event.getEntity().getWorld()).actionSettings.undoOn.of(action).damage.get();
-        }, farmControl);
+        Actioner.undoActions(event.getEntity(), action ->
+              farmControl.getFcConfig().worldSettings.of(event.getEntity().getWorld()).actionSettings.undoOn.of(action).damage.get(), farmControl);
     }
 
     @EventHandler
@@ -45,9 +44,9 @@ public class CompatibilityListener implements Listener {
         if (event.getTarget() == null) {
             return;
         }
-        Actioner.undoActions(event.getTarget(), action -> {
-            return farmControl.getFcConfig().worldSettings.of(event.getEntity().getWorld()).actionSettings.undoOn.of(action).target.get();
-        }, farmControl);
+
+        Actioner.undoActions(event.getTarget(), action ->
+              farmControl.getFcConfig().worldSettings.of(event.getEntity().getWorld()).actionSettings.undoOn.of(action).target.get(), farmControl);
     }
 
     @EventHandler
@@ -55,8 +54,12 @@ public class CompatibilityListener implements Listener {
         if (event.getReason() != EntityTargetEvent.TargetReason.TEMPT) {
             return;
         }
+
         Actioner.undoActions(event.getEntity(), action -> {
-            if (action instanceof RemoveRandomMovementAction) return false; // Hacky solution for https://github.com/froobynooby/FarmControl/issues/4
+            if (action instanceof RemoveRandomMovementAction) {
+                return false; // Hacky solution for https://github.com/froobynooby/FarmControl/issues/4
+            }
+
             return farmControl.getFcConfig().worldSettings.of(event.getEntity().getWorld()).actionSettings.undoOn.of(action).tempt.get();
         }, farmControl);
     }
@@ -77,5 +80,4 @@ public class CompatibilityListener implements Listener {
     public void onWorldUnload(WorldUnloadEvent event) {
         farmController.removeWorld(event.getWorld());
     }
-
 }

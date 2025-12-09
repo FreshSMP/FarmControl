@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import java.io.File;
 
 public class MessagesConfig extends NabConfiguration {
+
     private static final int CURRENT_VERSION = 1;
 
     public MessagesConfig(FarmControl farmControl) {
@@ -22,5 +23,4 @@ public class MessagesConfig extends NabConfiguration {
 
     @Entry(key = "breeding-disabled")
     public final ConfigEntry<Component> breedingDisabled = new MiniMessageConfigEntry();
-
 }

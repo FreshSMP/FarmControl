@@ -5,5 +5,4 @@ public interface TickTimesNmsHook {
     long[] getTickTimes();
 
     boolean isCompatible();
-
 }

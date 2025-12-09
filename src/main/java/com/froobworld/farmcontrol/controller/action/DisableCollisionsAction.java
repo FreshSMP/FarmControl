@@ -23,6 +23,7 @@ public class DisableCollisionsAction extends Action {
         if (!(entity instanceof Mob mob)) {
             return;
         }
+
         mob.setCollidable(true);
     }
 }

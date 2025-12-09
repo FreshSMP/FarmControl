@@ -15,14 +15,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class FcConfig extends NabConfiguration {
+
     private static final int CURRENT_VERSION = 9;
 
     public FcConfig(FarmControl farmControl) {
         super(
-                new File(farmControl.getDataFolder(), "config.yml"),
-                () -> farmControl.getResource("resources/config.yml"),
-                i -> farmControl.getResource("resources/config-patches/" + i + ".patch"),
-                CURRENT_VERSION
+              new File(farmControl.getDataFolder(), "config.yml"),
+              () -> farmControl.getResource("resources/config.yml"),
+              i -> farmControl.getResource("resources/config-patches/" + i + ".patch"),
+              CURRENT_VERSION
         );
     }
 
@@ -57,7 +58,6 @@ public class FcConfig extends NabConfiguration {
 
             @Entry(key = "reactive")
             public final ConfigEntry<List<String>> reactive = ConfigEntries.stringListEntry();
-
         }
 
         public static class ReactiveModeSettings extends ConfigSection {
@@ -81,9 +81,7 @@ public class FcConfig extends NabConfiguration {
 
                 @EntryMap(key = "entity-undo-weight", defaultKey = "default")
                 public final ConfigEntryMap<EntityType, Double> entityUndoWeight = new ConfigEntryMap<>(Objects::toString, ConfigEntries::doubleEntry, true);
-
             }
-
         }
 
         public static class ExclusionSettings extends ConfigSection {
@@ -117,7 +115,6 @@ public class FcConfig extends NabConfiguration {
 
             @Entry(key = "metadata")
             public final ConfigEntry<List<String>> metadata = ConfigEntries.stringListEntry();
-
         }
 
         public static class ActionSettings extends ConfigSection {
@@ -138,11 +135,8 @@ public class FcConfig extends NabConfiguration {
 
                 @Entry(key = "tempt")
                 public final ConfigEntry<Boolean> tempt = new ConfigEntry<>();
-
             }
-
         }
-
     }
 
     @Section(key = "mspt-tracker-settings")
@@ -152,7 +146,5 @@ public class FcConfig extends NabConfiguration {
 
         @Entry(key = "collection-period")
         public final ConfigEntry<Integer> collectionPeriod = ConfigEntries.integerEntry();
-
     }
-
 }

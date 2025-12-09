@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class PaperMessageAdapter implements MessageAdapter {
+
     private final MessagesConfig messagesConfig;
 
     public PaperMessageAdapter(FarmControl farmControl) throws Exception {
@@ -19,6 +20,7 @@ public class PaperMessageAdapter implements MessageAdapter {
         if (message == null) {
             throw new IllegalArgumentException("No message for key '" + messageKey + "'");
         }
+
         player.sendMessage(message);
     }
 
@@ -26,6 +28,7 @@ public class PaperMessageAdapter implements MessageAdapter {
         if (messageKey.equalsIgnoreCase("breeding-disabled")) {
             return messagesConfig.breedingDisabled.get();
         }
+
         return null;
     }
 
@@ -35,7 +38,7 @@ public class PaperMessageAdapter implements MessageAdapter {
         } catch (ClassNotFoundException e) {
             return false;
         }
+
         return true;
     }
-
 }

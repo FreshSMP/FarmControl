@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import static org.joor.Reflect.on;
 
 public class Bukkit1_16TickTimesHook implements TickTimesNmsHook {
+
     private long[] tickTimes;
     private boolean compatible = true;
 
@@ -35,13 +36,14 @@ public class Bukkit1_16TickTimesHook implements TickTimesNmsHook {
                         compatible = false; // we've found multiple possible field names
                         return;
                     }
+
                     fieldName = field.getName();
                 }
             }
             tickTimes = on(Bukkit.getServer())
                     .call("getServer")
                     .get(fieldName);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
-
 }

@@ -7,8 +7,6 @@ import org.bstats.json.JsonObjectBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +16,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class Metrics {
+
     private final FarmControl plugin;
     private final MetricsBase metricsBase;
 
@@ -53,7 +52,8 @@ public class Metrics {
             ).copyDefaults(true);
             try {
                 config.save(configFile);
-            } catch (IOException ignored) { }
+            } catch (IOException ignored) {
+            }
         }
 
         // Load the data
@@ -76,7 +76,8 @@ public class Metrics {
                 (message) -> this.plugin.getLogger().log(Level.INFO, message),
                 logErrors,
                 logSentData,
-                logResponseStatusText
+                logResponseStatusText,
+                false
         );
     }
 
@@ -125,5 +126,4 @@ public class Metrics {
             return Bukkit.getOnlinePlayers().size(); // Just use the new method if the reflection failed
         }
     }
-
 }

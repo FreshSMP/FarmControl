@@ -13,5 +13,4 @@ public interface SchedulerHook {
     ScheduledTask runEntityTask(Runnable runnable, Runnable retired, Entity entity);
 
     ScheduledTask runEntityTaskAsap(Runnable runnable, Runnable retired, Entity entity);
-
 }

@@ -3,6 +3,7 @@ package com.froobworld.farmcontrol.controller.action;
 import org.bukkit.entity.Entity;
 
 public abstract class Action {
+
     private final String name;
     private final Class<?> entityClass;
     private final boolean removes;
@@ -13,6 +14,7 @@ public abstract class Action {
         if (!name.matches("[a-z-]+")) {
             throw new IllegalArgumentException("Name must match [a-z-]+");
         }
+
         this.entityClass = entityClass;
         this.name = name;
         this.removes = removes;

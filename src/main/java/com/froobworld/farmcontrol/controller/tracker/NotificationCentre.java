@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class NotificationCentre {
+
     private static final UUID CONSOLE_UUID = new UUID(0, 0);
     private final FarmControl farmControl;
     private final ExecutorService executorService;
@@ -43,6 +44,7 @@ public class NotificationCentre {
         } else {
             notificationBuilder.append(".").color(ChatColor.GRAY);
         }
+
         BaseComponent[] breakdown = cycleStats.getBreakdown();
         notificationBuilder.getParts().forEach(part -> part.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, breakdown)));
         BaseComponent[] message = notificationBuilder.create();
@@ -51,10 +53,12 @@ public class NotificationCentre {
             if (!player.hasPermission("farmcontrol.command.notify")) {
                 continue;
             }
+
             if (notifiableUsers.contains(player.getUniqueId())) {
                 player.spigot().sendMessage(message);
             }
         }
+
         if (notifiableUsers.contains(CONSOLE_UUID)) {
             Bukkit.getConsoleSender().spigot().sendMessage(message);
         }
@@ -67,11 +71,13 @@ public class NotificationCentre {
         } else {
             uuid = CONSOLE_UUID;
         }
+
         if (notifiable) {
             notifiableUsers.add(uuid);
         } else {
             notifiableUsers.remove(uuid);
         }
+
         save();
     }
 
@@ -82,6 +88,7 @@ public class NotificationCentre {
         } else {
             uuid = CONSOLE_UUID;
         }
+
         return notifiableUsers.contains(uuid);
     }
 
@@ -91,6 +98,7 @@ public class NotificationCentre {
         if (!userFile.exists()) {
             return;
         }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
             for(String line; (line = reader.readLine()) != null; ) {
                 if (!line.isEmpty()) {
@@ -114,6 +122,7 @@ public class NotificationCentre {
                     return;
                 }
             }
+
             try (PrintWriter writer = new PrintWriter(new FileWriter(userFile, false))) {
                 for (UUID uuid : users) {
                     writer.println(uuid.toString());
@@ -123,5 +132,4 @@ public class NotificationCentre {
             }
         });
     }
-
 }

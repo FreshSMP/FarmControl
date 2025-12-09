@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ActionManager {
+
     private final Map<String, Action> actions = new HashMap<>();
 
     public void addDefaults(FarmControl farmControl) {
@@ -37,5 +38,4 @@ public class ActionManager {
     public Set<Action> getActions() {
         return new HashSet<>(actions.values());
     }
-
 }

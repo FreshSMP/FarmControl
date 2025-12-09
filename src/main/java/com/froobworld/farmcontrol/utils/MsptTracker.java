@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class MsptTracker {
+
     private static final long MILLIS_PER_NANOS = TimeUnit.MILLISECONDS.toNanos(1);
     private final Consumer<Long> tickConsumer = this::onTickEnd;
     private final TickHook tickHook;
@@ -44,6 +45,7 @@ public class MsptTracker {
                 cachedMspt = (double) sortedTickDurations.get(sortedTickDurations.size() / 2) / MILLIS_PER_NANOS;
             }
         }
+
         return cachedMspt;
     }
 
@@ -51,8 +53,8 @@ public class MsptTracker {
         if (tickDurations.size() >= collectionPeriod) {
             tickDurations.remove();
         }
+
         tickDurations.add(tickDuration);
         cachedMspt = null;
     }
-
 }

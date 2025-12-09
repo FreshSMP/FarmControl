@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Function;
 
 public class RegionisedEntityGetterHook implements EntityGetterHook {
+
     private final FarmControl farmControl;
 
     public RegionisedEntityGetterHook(FarmControl farmControl) {
@@ -35,14 +36,18 @@ public class RegionisedEntityGetterHook implements EntityGetterHook {
                             break;
                         }
                     }
+
                     if (eligible) {
                         entityCollector.addEntity(entity, mapper.apply(entity));
                     }
                 }
+
                 chunkFuture.complete(null);
             });
+
             future = future.thenCompose(v -> chunkFuture);
         }
+
         return future.thenApply(v -> entityCollector.getEntities());
     }
 
@@ -84,5 +89,4 @@ public class RegionisedEntityGetterHook implements EntityGetterHook {
             return mappedEntities;
         }
     }
-
 }

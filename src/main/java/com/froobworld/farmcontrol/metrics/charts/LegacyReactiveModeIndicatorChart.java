@@ -20,11 +20,12 @@ public class LegacyReactiveModeIndicatorChart extends SimplePie {
                     }
                 }
             }
+
             if (usingReactiveMode && farmControl.getHookManager().getMsptTracker() != null) {
                 return "mspt";
             }
+
             return null;
         });
     }
-
 }

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 public class PaperTickHook implements TickHook {
+
     private final Set<Consumer<Long>> tickConsumers = new HashSet<>();
     private final Listener tickListener = new Listener() {
         private Long start = null;
@@ -52,7 +53,7 @@ public class PaperTickHook implements TickHook {
         } catch (ClassNotFoundException e) {
             return false;
         }
+
         return true;
     }
-
 }

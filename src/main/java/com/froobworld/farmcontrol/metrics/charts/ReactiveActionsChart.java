@@ -25,8 +25,8 @@ public class ReactiveActionsChart extends SimpleBarChart {
                     }
                 }
             }
+
             return actionMap;
         });
     }
-
 }

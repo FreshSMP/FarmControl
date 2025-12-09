@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ExclusionManager {
+
     private final FarmControl farmControl;
 
     public ExclusionManager(FarmControl farmControl) {
@@ -31,39 +32,48 @@ public class ExclusionManager {
             if (excludeLeashed && snapshotEntity.isLeashed()) {
                 return true;
             }
+
             if (excludeLoveMode && snapshotEntity.isLoveMode()) {
                 return true;
             }
+
             if (excludeNamed && snapshotEntity.hasCustomName()) {
                 return true;
             }
+
             if (excludeTamed && snapshotEntity.isTamed()) {
                 return true;
             }
+
             if (excludePatrolLeaders && snapshotEntity.isPatrolLeader()) {
                 return true;
             }
+
             if (excludePickupable && snapshotEntity.isPickupable()) {
                 return true;
             }
+
             if (excludeMounted && snapshotEntity.isMounted()) {
                 return true;
             }
+
             if (snapshotEntity.getTicksLived() < excludeTicksLived) {
                 return true;
             }
+
             for (String meta : excludeMeta) {
                 if (snapshotEntity.hasMetadata(meta)) {
                     return true;
                 }
             }
+
             for (String type : excludeType) {
                 if (snapshotEntity.getEntityType().toString().equalsIgnoreCase(type)) {
                     return true;
                 }
             }
+
             return false;
         };
     }
-
 }

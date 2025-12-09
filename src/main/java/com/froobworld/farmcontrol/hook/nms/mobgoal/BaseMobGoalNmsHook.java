@@ -12,6 +12,7 @@ import java.util.Set;
 import static org.joor.Reflect.*;
 
 public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
+
     private final String wrappedGoalsFieldName; // Set<WrappedGoal> in GoalSelector
     private final String unwrappedGoalFieldName; // Goal in WrappedGoal
     private final String mobClassName; // NMS class for mobs
@@ -44,6 +45,7 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
         for (int i = 0; i < goalSelectorFieldNames.size(); i++) {
             goalSelectors[i] = mobHandle.get(goalSelectorFieldNames.get(i));
         }
+
         return goalSelectors;
     }
 
@@ -76,10 +78,12 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
                     goalSelectorFieldNames.add(field.getName());
                 }
             }
+
             if (goalSelectorFieldNames.isEmpty()) {
                 compatible = false; // found no goal selectors
                 return;
             }
+
             boolean foundField = false;
             for (Field field : goalSelectorClass.getDeclaredFields()) {
                 if (field.getName().equals(wrappedGoalsFieldName)) {
@@ -91,10 +95,13 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
                     break;
                 }
             }
+
             if (!foundField) {
                 compatible = false; // couldn't find a matching field
             }
-        } catch (ClassNotFoundException ignored) {}
+
+        } catch (ClassNotFoundException ignored) {
+        }
     }
 
     private void initGoalUnwrapper() {
@@ -108,14 +115,17 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
                         compatible = false; // found the field, but it's the wrong type
                         break;
                     }
+
                     foundField = true;
                     break;
                 }
             }
+
             if (!foundField) {
                 compatible = false; // couldn't find a matching field
             }
-        } catch (ClassNotFoundException ignored) {}
+        } catch (ClassNotFoundException ignored) {
+        }
     }
 
     private void initRandomMovementGoalClasses() {
@@ -123,11 +133,10 @@ public abstract class BaseMobGoalNmsHook implements MobGoalNmsHook {
             for (String className : randomMovementClassNames) {
                 randomMovementGoalClasses.add(Class.forName(className));
             }
-
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         if (randomMovementGoalClasses.isEmpty()) {
             compatible = false; // none of our random movement classes exist
         }
     }
-
 }

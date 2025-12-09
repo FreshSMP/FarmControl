@@ -22,6 +22,7 @@ public class LegacyModesInUseChart extends AdvancedPie {
                         break;
                     }
                 }
+
                 for (String profileName : farmControl.getFcConfig().worldSettings.of(world).profiles.reactive.get()) {
                     ActionProfile actionProfile = farmControl.getProfileManager().getActionProfile(profileName);
                     if (actionProfile != null) {
@@ -30,8 +31,8 @@ public class LegacyModesInUseChart extends AdvancedPie {
                     }
                 }
             }
+
             return modeCountMap;
         });
     }
-
 }

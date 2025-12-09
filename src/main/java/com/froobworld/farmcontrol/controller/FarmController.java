@@ -15,6 +15,7 @@ import org.bukkit.entity.*;
 import java.util.*;
 
 public class FarmController {
+
     public static final Class<?>[] ENTITY_CLASSES = List.of(Mob.class, Vehicle.class, Projectile.class, Item.class).toArray(new Class[0]);
     private final FarmControl farmControl;
     private final CycleHistoryManager cycleHistoryManager;
@@ -41,6 +42,7 @@ public class FarmController {
         for (World world : worlds) {
             removeWorld(world);
         }
+
         worldTriggerProfilesMap.clear();
     }
 
@@ -62,8 +64,10 @@ public class FarmController {
                 farmControl.getLogger().warning("Unknown profile for world '" + world.getName() + "': '" + profileName.toLowerCase() + "'");
                 continue;
             }
+
             triggerProfileMap.computeIfAbsent(proactiveTrigger, trigger -> new HashSet<>()).add(actionProfile);
         }
+
         if (farmControl.getHookManager().getMsptTracker() != null) {
             Trigger reactiveTrigger = farmControl.getTriggerManager().getTrigger("reactive");
             for (String profileName : farmControl.getFcConfig().worldSettings.of(world).profiles.reactive.get()) {
@@ -72,6 +76,7 @@ public class FarmController {
                     farmControl.getLogger().warning("Unknown profile for world '" + world.getName() + "': '" + profileName.toLowerCase() + "'");
                     continue;
                 }
+
                 triggerProfileMap.computeIfAbsent(reactiveTrigger, trigger -> new HashSet<>()).add(actionProfile);
             }
         } else {
@@ -96,6 +101,7 @@ public class FarmController {
         if (scheduledTask != null) {
             throw new IllegalStateException("Already registered");
         }
+
         triggerCheckTask = new TriggerCheckTask(farmControl, this, worldTriggerProfilesMap);
         long cyclePeriod = farmControl.getFcConfig().cyclePeriod.get();
         long startUpDelay = farmControl.getFcConfig().startUpDelay.get();
@@ -109,6 +115,7 @@ public class FarmController {
             scheduledTask.cancel();
             scheduledTask = null;
         }
+
         triggerCheckTask.stop();
         triggerCheckTask = null;
     }
@@ -124,5 +131,4 @@ public class FarmController {
             farmControl.getHookManager().getSchedulerHook().runTask(untriggerPerformTask);
         }
     }
-
 }

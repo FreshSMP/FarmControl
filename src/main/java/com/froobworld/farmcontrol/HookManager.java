@@ -13,6 +13,7 @@ import com.froobworld.farmcontrol.hook.tick.TickHook;
 import com.froobworld.farmcontrol.utils.MsptTracker;
 
 public class HookManager {
+
     private final FarmControl farmControl;
     private final NmsHooks nmsHooks;
     private final TickHook tickHook;
@@ -28,6 +29,7 @@ public class HookManager {
         } else {
             schedulerHook = new BukkitSchedulerHook(farmControl);
         }
+
         if (RegionisedSchedulerHook.isCompatible()) {
             tickHook = null;
         } else if (PaperTickHook.isCompatible()) {
@@ -37,11 +39,13 @@ public class HookManager {
         } else {
             tickHook = null;
         }
+
         if (RegionisedEntityGetterHook.isCompatible()) {
             entityGetterHook = new RegionisedEntityGetterHook(farmControl);
         } else {
             entityGetterHook = new BukkitEntityGetterHook();
         }
+
         if (tickHook != null) {
             tickHook.register(farmControl);
         }
@@ -61,6 +65,7 @@ public class HookManager {
         if (msptTracker != null) {
             msptTracker.unregister();
         }
+
         load();
     }
 

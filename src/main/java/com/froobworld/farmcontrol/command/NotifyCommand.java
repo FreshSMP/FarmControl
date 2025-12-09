@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class NotifyCommand implements CommandExecutor {
+
     private final FarmControl farmControl;
 
     public NotifyCommand(FarmControl farmControl) {
@@ -24,6 +25,7 @@ public class NotifyCommand implements CommandExecutor {
         } else {
             sender.sendMessage(ChatColor.YELLOW + "FarmControl will no longer notify you of actions it performs.");
         }
+
         return true;
     }
 }

@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
 public class BukkitSchedulerHook implements SchedulerHook {
+
     private final FarmControl farmControl;
 
     public BukkitSchedulerHook(FarmControl farmControl) {
@@ -21,6 +22,7 @@ public class BukkitSchedulerHook implements SchedulerHook {
         if (Bukkit.isPrimaryThread()) {
             runnable.run();
         }
+
         return runTask(runnable);
     }
 
@@ -40,7 +42,8 @@ public class BukkitSchedulerHook implements SchedulerHook {
             runnable.run();
             return new ScheduledTask() {
                 @Override
-                public void cancel() {}
+                public void cancel() {
+                }
 
                 @Override
                 public boolean isCancelled() {
@@ -48,10 +51,12 @@ public class BukkitSchedulerHook implements SchedulerHook {
                 }
             };
         }
+
         return runTask(runnable);
     }
 
     private static class BukkitScheduledTask implements ScheduledTask {
+
         private final int taskId;
 
         private BukkitScheduledTask(int taskId) {
@@ -68,5 +73,4 @@ public class BukkitSchedulerHook implements SchedulerHook {
             return !Bukkit.getScheduler().isQueued(taskId) && !Bukkit.getScheduler().isCurrentlyRunning(taskId);
         }
     }
-
 }

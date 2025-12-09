@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ActionPerformTask implements Runnable {
+
     private final World world;
     private final SchedulerHook schedulerHook;
     private final Map<SnapshotEntity, Set<TriggerActionPair>> triggerActionMap;
@@ -39,6 +40,7 @@ public class ActionPerformTask implements Runnable {
                     if (!entity.isValid()) {
                         return;
                     }
+
                     FcData fcData = FcData.getOrCreate(entity);
                     Set<TriggerActionPair> triggerActionPairs = triggerActionMap.get(snapshotEntity);
                     for (TriggerActionPair triggerActionPair : triggerActionPairs) {
@@ -47,36 +49,42 @@ public class ActionPerformTask implements Runnable {
                             cycleTracker.reportAction(triggerActionPair.action, snapshotEntity);
                         }
                     }
+
                     fcData.save(entity);
                 } finally {
                     entityFuture.complete(null);
                 }
             }, () -> entityFuture.complete(null), entity);
+
             if (scheduledTask != null) {
                 future = future.thenCompose(v -> entityFuture);
             }
         }
+
         for (SnapshotEntity snapshotEntity : unTriggerActionMap.keySet()) {
             Entity entity = snapshotEntity.getEntity();
             schedulerHook.runEntityTaskAsap(() -> {
                 if (!entity.isValid()) {
                     return;
                 }
+
                 FcData fcData = snapshotEntity.getFcData();
                 if (fcData == null) {
                     return;
                 }
+
                 Set<TriggerActionPair> triggerActionPairs = unTriggerActionMap.get(snapshotEntity);
                 for (TriggerActionPair triggerActionPair : triggerActionPairs) {
                     if (fcData.remove(triggerActionPair.trigger, triggerActionPair.action)) {
                         triggerActionPair.action.undoAction(entity);
                     }
                 }
+
                 fcData.save(entity);
                 FcData.removeIfEmpty(entity);
             }, null, entity);
         }
+
         future.thenRunAsync(() -> schedulerHook.runTask(() -> cycleTracker.signalCompletion(world)));
     }
-
 }

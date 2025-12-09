@@ -15,6 +15,7 @@ public class RemoveAiAction extends Action {
         if (!(entity instanceof Mob mob)) {
             return;
         }
+
         mob.setAI(false);
     }
 
@@ -23,6 +24,7 @@ public class RemoveAiAction extends Action {
         if (!(entity instanceof Mob mob)) {
             return;
         }
+
         mob.setAI(true);
         mob.setVelocity(new Vector(0, 0, 0));
     }

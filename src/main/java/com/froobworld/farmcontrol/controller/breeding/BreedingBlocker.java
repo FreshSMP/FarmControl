@@ -65,5 +65,4 @@ public class BreedingBlocker implements Listener {
             event.setCancelled(true);
         }
     }
-
 }

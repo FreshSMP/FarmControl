@@ -4,6 +4,7 @@ import com.froobworld.farmcontrol.FarmControl;
 import com.froobworld.farmcontrol.metrics.charts.*;
 
 public class FcMetrics {
+
     private final FarmControl farmControl;
     private final Metrics metrics;
 
@@ -23,5 +24,4 @@ public class FcMetrics {
         metrics.addCustomChart(new ReactiveActionsChart(farmControl));
         metrics.addCustomChart(new ModesInUseChart(farmControl));
     }
-
 }

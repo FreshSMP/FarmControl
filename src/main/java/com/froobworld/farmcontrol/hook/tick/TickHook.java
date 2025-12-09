@@ -11,5 +11,4 @@ public interface TickHook {
     boolean addTickConsumer(Consumer<Long> consumer);
 
     boolean removeTickConsumer(Consumer<Long> consumer);
-
 }

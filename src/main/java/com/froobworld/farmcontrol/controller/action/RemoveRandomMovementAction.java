@@ -10,6 +10,7 @@ import org.bukkit.entity.Mob;
 import java.util.*;
 
 public class RemoveRandomMovementAction extends Action {
+
     private final static Map<Mob, Map<Object, Set<Object>>> entityRemovedGoalsMap = new MapMaker().weakKeys().makeMap();
     private final MobGoalNmsHook nmsHook;
 
@@ -49,6 +50,7 @@ public class RemoveRandomMovementAction extends Action {
                     removedGoals.add(nextGoal);
                 }
             }
+
             entityRemovedGoalsMap
                     .compute(mob, (k, v) -> v == null ? new HashMap<>() : v)
                     .compute(goalSelector, (k, v) -> v == null ? removedGoals : Sets.union(removedGoals, v));
@@ -60,10 +62,12 @@ public class RemoveRandomMovementAction extends Action {
         if (!(entity instanceof Mob mob)) {
             return;
         }
+
         Map<Object, Set<Object>> removedGoalsMap = entityRemovedGoalsMap.remove(mob);
         if (removedGoalsMap == null) {
             return;
         }
+
         Iterator<Object> goalSelectorIterator = removedGoalsMap.keySet().iterator();
         while (goalSelectorIterator.hasNext()) {
             Object goalSelector = goalSelectorIterator.next();
@@ -72,8 +76,8 @@ public class RemoveRandomMovementAction extends Action {
             if (removedGoals != null) {
                 wrappedGoals.addAll(removedGoals);
             }
+
             goalSelectorIterator.remove();
         }
     }
-
 }

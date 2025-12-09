@@ -17,5 +17,4 @@ public interface EntityGetterHook {
     CompletableFuture<List<SnapshotEntity>> getSnapshotEntities(World world, Class<?>... classes);
 
     CompletableFuture<List<SnapshotEntity>> getSnapshotEntities(World world);
-
 }

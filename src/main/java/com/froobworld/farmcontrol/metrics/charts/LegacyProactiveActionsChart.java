@@ -25,8 +25,8 @@ public class LegacyProactiveActionsChart extends AdvancedPie {
                     }
                 }
             }
+
             return actionCountMap;
         });
     }
-
 }

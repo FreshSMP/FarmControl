@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SnapshotEntity {
+
     private static final AtomicBoolean useWoodType = new AtomicBoolean(false);
     private final Entity entity;
     private final int entityId;
@@ -40,18 +41,22 @@ public class SnapshotEntity {
         this.ticksLived = entity.getTicksLived();
         this.mounted = !entity.getPassengers().isEmpty();
         classifications.add(entity.getType());
+
         if (entity instanceof Colorable) {
             DyeColor colour = ((Colorable) entity).getColor();
             if (colour != null) {
                 classifications.add(colour);
             }
         }
+
         if (entity instanceof Villager) {
             classifications.add(((Villager) entity).getProfession());
         }
+
         if (entity instanceof Item) {
             classifications.add(((Item) entity).getItemStack().getType());
         }
+
         if (entity instanceof Boat) {
             // try to add boat type, falling back to wood type for version < 1.19
             if (!SnapshotEntity.useWoodType.get()) {
@@ -61,8 +66,8 @@ public class SnapshotEntity {
                     useWoodType.set(true);
                 }
             }
+
             if (SnapshotEntity.useWoodType.get()) {
-                //noinspection deprecation
                 classifications.add(((Boat) entity).getWoodType());
             }
         }
@@ -131,5 +136,4 @@ public class SnapshotEntity {
     public List<Object> getClassifications() {
         return classifications;
     }
-
 }

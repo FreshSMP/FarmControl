@@ -10,9 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static org.joor.Reflect.*;
+import static org.joor.Reflect.on;
 
 public class BukkitTickHook implements TickHook {
+
     private final long[] tickTimes;
     private final Set<Consumer<Long>> tickConsumers = new HashSet<>();
     private final SchedulerHook schedulerHook;
@@ -48,6 +49,7 @@ public class BukkitTickHook implements TickHook {
         if (currentTick < 1) {
             return 0;
         }
+
         return tickTimes == null ? 0 : tickTimes[(currentTick - 1) % tickTimes.length];
     }
 
@@ -55,5 +57,4 @@ public class BukkitTickHook implements TickHook {
         return on(Bukkit.getScheduler())
                 .get("currentTick");
     }
-
 }

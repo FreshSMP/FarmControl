@@ -17,9 +17,11 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FcData {
+
     private static final Map<Entity, FcData> dataCache = new MapMaker().weakKeys().makeMap();
     private static final NamespacedKey KEY = new NamespacedKey(FarmControl.getPlugin(FarmControl.class), "data");
     private static final PersistentDataType<String, FcData> TYPE = new PersistentDataType<String, FcData>() {
+
         private final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         @Override
         public @NotNull Class<String> getPrimitiveType() {
@@ -48,6 +50,7 @@ public class FcData {
 
     @Expose
     private final ConcurrentHashMap<String, Set<String>> persistentActionTriggerMap = new ConcurrentHashMap<>();
+
     @Expose
     private final ConcurrentHashMap<String, Set<String>> persistentTriggerActionMap = new ConcurrentHashMap<>();
 
@@ -55,7 +58,8 @@ public class FcData {
     private final ConcurrentHashMap<String, Set<String>> triggerActionMap = new ConcurrentHashMap<>();
     private boolean dirty = false;
 
-    private FcData() {}
+    private FcData() {
+    }
 
     public Set<String> getActions(Trigger trigger) {
         return triggerActionMap.get(trigger.getName());
@@ -77,8 +81,10 @@ public class FcData {
             if (persistentActionTriggerMap.computeIfAbsent(action.getName(), a -> new HashSet<>()).add(trigger.getName())) {
                 dirty = true;
             }
+
             persistentTriggerActionMap.computeIfAbsent(trigger.getName(), t -> new HashSet<>()).add(action.getName());
         }
+
         return !previouslyActioned;
     }
 
@@ -90,15 +96,18 @@ public class FcData {
                 actionTriggerMap.remove(action.getName());
             }
         }
+
         if (persistentActionTriggerMap.containsKey(action.getName())) {
             Set<String> triggers = persistentActionTriggerMap.get(action.getName());
             if (triggers.remove(trigger.getName())) {
                 dirty = true;
             }
+
             if (triggers.isEmpty()) {
                 persistentActionTriggerMap.remove(action.getName());
             }
         }
+
         if (triggerActionMap.containsKey(trigger.getName())) {
             Set<String> actions = triggerActionMap.get(trigger.getName());
             actions.remove(action.getName());
@@ -106,6 +115,7 @@ public class FcData {
                 triggerActionMap.remove(trigger.getName());
             }
         }
+
         if (persistentTriggerActionMap.containsKey(trigger.getName())) {
             Set<String> actions = persistentTriggerActionMap.get(trigger.getName());
             actions.remove(action.getName());
@@ -113,6 +123,7 @@ public class FcData {
                 persistentTriggerActionMap.remove(trigger.getName());
             }
         }
+
         return !actionTriggerMap.containsKey(action.getName());
     }
 
@@ -120,6 +131,7 @@ public class FcData {
         if (!actionTriggerMap.containsKey(action.getName())) {
             return false;
         }
+
         actionTriggerMap.remove(action.getName());
         triggerActionMap.values().forEach(actions -> actions.remove(action.getName()));
         if (persistentActionTriggerMap.containsKey(action.getName())) {
@@ -127,6 +139,7 @@ public class FcData {
             persistentTriggerActionMap.values().forEach(actions -> actions.remove(action.getName()));
             dirty = true;
         }
+
         return true;
     }
 
@@ -150,6 +163,7 @@ public class FcData {
                 dataCache.put(entity, data);
             }
         }
+
         return data;
     }
 
@@ -159,6 +173,7 @@ public class FcData {
             data = new FcData();
             dataCache.put(entity, data);
         }
+
         return data;
     }
 
@@ -169,5 +184,4 @@ public class FcData {
             dataCache.remove(entity);
         }
     }
-
 }

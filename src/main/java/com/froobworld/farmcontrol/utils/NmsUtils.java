@@ -2,9 +2,10 @@ package com.froobworld.farmcontrol.utils;
 
 import org.bukkit.Bukkit;
 
-import static org.joor.Reflect.*;
+import static org.joor.Reflect.on;
 
 public class NmsUtils {
+
     private static final String NMS_PACKAGE_NAME = on(Bukkit.getServer()).call("getHandle")
             .type()
             .getPackage()
@@ -18,5 +19,4 @@ public class NmsUtils {
     public static String getFieldOrMethodName(String pre1_17Name, String post1_17Name) {
         return PRE_1_17 ? pre1_17Name : post1_17Name;
     }
-
 }

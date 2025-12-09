@@ -6,6 +6,7 @@ import org.bukkit.World;
 import java.util.*;
 
 public class CycleHistoryManager {
+
     private final Queue<CycleStats> cycleStats = new ArrayDeque<>();
     private final NotificationCentre notificationCentre;
 
@@ -26,11 +27,11 @@ public class CycleHistoryManager {
         if (this.cycleStats.size() > 5) {
             this.cycleStats.remove();
         }
+
         notificationCentre.notify(cycleStats);
     }
 
     public List<CycleStats> getCycleHistory() {
         return new ArrayList<>(cycleStats);
     }
-
 }

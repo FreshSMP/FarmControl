@@ -19,9 +19,7 @@ public class Bukkit1_20_5MobGoalNmsHook extends BaseMobGoalNmsHook {
                         NmsUtils.getFullyQualifiedClassName("PathfinderGoalRandomStroll", "world.entity.ai.goal"),
                         NmsUtils.getFullyQualifiedClassName("PathfinderGoalRandomStrollLand", "world.entity.ai.goal"),
                         NmsUtils.getFullyQualifiedClassName("PathfinderGoalRandomSwim", "world.entity.ai.goal")
-
                 )
         );
     }
-
 }

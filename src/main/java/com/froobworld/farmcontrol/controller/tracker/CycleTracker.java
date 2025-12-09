@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CycleTracker {
+
     private boolean empty = true;
     private final CycleHistoryManager cycleHistoryManager;
     private final CycleStats.Builder statsBuilder;
@@ -35,5 +36,4 @@ public class CycleTracker {
             cycleHistoryManager.reportCompletedCycle(statsBuilder.end(System.currentTimeMillis()));
         }
     }
-
 }

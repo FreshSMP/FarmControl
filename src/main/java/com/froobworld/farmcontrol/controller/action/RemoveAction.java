@@ -14,5 +14,6 @@ public class RemoveAction extends Action {
     }
 
     @Override
-    public void undoAction(Entity entity) {}
+    public void undoAction(Entity entity) {
+    }
 }

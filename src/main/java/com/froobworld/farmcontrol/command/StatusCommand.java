@@ -19,12 +19,12 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatusCommand implements CommandExecutor {
+
     private FarmControl farmControl;
 
     public StatusCommand(FarmControl farmControl) {
         this.farmControl = farmControl;
     }
-
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String cl, @NotNull String[] args) {
@@ -39,10 +39,12 @@ public class StatusCommand implements CommandExecutor {
         } else {
             world = Bukkit.getWorld(args[1]);
         }
+
         if (world == null) {
             sender.sendMessage(ChatColor.RED + "Unknown world.");
             return true;
         }
+
         AtomicInteger entityCount = new AtomicInteger(0);
         AtomicInteger affectedCount = new AtomicInteger(0);
         Map<String, AtomicInteger> actionCount = new HashMap<>();
@@ -59,8 +61,10 @@ public class StatusCommand implements CommandExecutor {
                     }
                 }
             }
+
             completableFuture.complete(null);
         });
+
         completableFuture.thenRunAsync(() -> {
             sender.sendMessage(ChatColor.GRAY + "Status for world '" + ChatColor.RED + world.getName() + ChatColor.GRAY + "'");
             sender.sendMessage("");
@@ -74,7 +78,7 @@ public class StatusCommand implements CommandExecutor {
                 }
             }
         });
+
         return true;
     }
-
 }

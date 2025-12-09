@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Comparator;
 
 public class Group {
+
     private final GroupDefinition definition;
     private final MixedEntitySet members = new MixedEntitySet(Comparator.comparingLong(SnapshotEntity::getTicksLived)); // youngest removed first
 
@@ -22,5 +23,4 @@ public class Group {
     public boolean meetsCondition() {
         return members.size() >= definition.getSize();
     }
-
 }

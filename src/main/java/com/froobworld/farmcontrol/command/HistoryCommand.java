@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class HistoryCommand implements CommandExecutor {
+
     private final FarmControl farmControl;
 
     public HistoryCommand(FarmControl farmControl) {
@@ -38,6 +39,7 @@ public class HistoryCommand implements CommandExecutor {
             builder.append("Total of ").color(net.md_5.bungee.api.ChatColor.GRAY)
                     .append(cycleStats.getAffectedEntityCount() + "").color(net.md_5.bungee.api.ChatColor.RED)
                     .append(" entities affected").color(net.md_5.bungee.api.ChatColor.GRAY);
+
             if (cycleStats.getEntitiesRemoved() > 0) {
                 builder.append(", with ").color(net.md_5.bungee.api.ChatColor.GRAY)
                         .append(cycleStats.getEntitiesRemoved() + "").color(net.md_5.bungee.api.ChatColor.RED)
@@ -45,6 +47,7 @@ public class HistoryCommand implements CommandExecutor {
             } else {
                 builder.append(".").color(net.md_5.bungee.api.ChatColor.GRAY);
             }
+
             BaseComponent[] breakdown = cycleStats.getBreakdown();
             builder.getParts().forEach(part -> part.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, breakdown)));
 

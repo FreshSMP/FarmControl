@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CycleStats {
+
     private final long startTime;
     private final long endTime;
     private final int entitiesAffected;
@@ -64,6 +65,7 @@ public class CycleStats {
             components.addAll(Arrays.asList(baseComponents));
             firstAction = false;
         }
+
         return components.toArray(new BaseComponent[0]);
     }
 
@@ -86,6 +88,7 @@ public class CycleStats {
             if (action.removes()) {
                 removedEntities.add(entity);
             }
+
             actionCounts.computeIfAbsent(action, a -> new HashMap<>())
                     .compute(entity.getEntityType(), (e, count) -> count != null ? count + 1 : 1);
         }
@@ -93,7 +96,5 @@ public class CycleStats {
         public CycleStats end(long endTime) {
             return new CycleStats(startTime, endTime, affectedEntities.size(), removedEntities.size(), actionCounts);
         }
-
     }
-
 }

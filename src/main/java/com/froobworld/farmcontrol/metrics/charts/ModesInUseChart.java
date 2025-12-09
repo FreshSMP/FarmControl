@@ -20,6 +20,7 @@ public class ModesInUseChart extends SimplePie {
                         break;
                     }
                 }
+
                 for (String profileName : farmControl.getFcConfig().worldSettings.of(world).profiles.reactive.get()) {
                     ActionProfile actionProfile = farmControl.getProfileManager().getActionProfile(profileName);
                     if (actionProfile != null) {
@@ -28,6 +29,7 @@ public class ModesInUseChart extends SimplePie {
                     }
                 }
             }
+
             if (usesProactive && usesReactive) {
                 return "Both proactive and reactive";
             } else if (usesProactive) {
@@ -35,8 +37,8 @@ public class ModesInUseChart extends SimplePie {
             } else if (usesReactive) {
                 return "Reactive";
             }
+
             return "None";
         });
     }
-
 }

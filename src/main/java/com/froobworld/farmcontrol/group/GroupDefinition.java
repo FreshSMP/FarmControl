@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class GroupDefinition {
+
     private final Set<EntityCategory> memberCategories;
     private final Set<EntityCategory> excludedCategories;
     private final Predicate<SnapshotEntity> typePredicate;
@@ -90,6 +91,7 @@ public class GroupDefinition {
                 memberCategories.add(entityCategory);
             }
         }
+
         Set<EntityCategory> excludedCategories = new HashSet<>();
         for (String entityType : section.getStringList("exclude-types")) {
             EntityCategory entityCategory = EntityCategory.ofName(entityType);
@@ -99,6 +101,7 @@ public class GroupDefinition {
                 excludedCategories.add(entityCategory);
             }
         }
+
         int size = section.getInt("count");
         boolean sameChunk = section.isString("distance") && "same-chunk".equalsIgnoreCase(section.getString("distance"));
         double distance = sameChunk ? 0 : section.getDouble("distance");
@@ -107,5 +110,4 @@ public class GroupDefinition {
 
         return new GroupDefinition(memberCategories, excludedCategories, size, distance, sameChunk, ignoreVerticalDistance, pure);
     }
-
 }

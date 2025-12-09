@@ -7,6 +7,7 @@ import com.froobworld.farmcontrol.message.adapter.SpigotMessageAdapter;
 import org.bukkit.entity.Player;
 
 public class MessageManager {
+
     private final FarmControl farmControl;
     private MessageAdapter messageAdapter;
 
@@ -26,7 +27,7 @@ public class MessageManager {
         if (messageAdapter == null) {
             throw new IllegalStateException("No message adapter");
         }
+
         messageAdapter.sendMessage(player, messageKey);
     }
-
 }

@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FarmControlCommand implements CommandExecutor {
+
     public static final String NO_PERMISSION_MESSAGE = ChatColor.RED + "You don't have permission to use this command.";
+
     private final FarmControl farmControl;
 
     private final ReloadCommand reloadCommand;
@@ -38,6 +40,7 @@ public class FarmControlCommand implements CommandExecutor {
             sendHelp(sender, s);
             return true;
         }
+
         if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
             if (sender.hasPermission("farmcontrol.command.reload")) {
                 return reloadCommand.onCommand(sender, command, s, args);
@@ -46,6 +49,7 @@ public class FarmControlCommand implements CommandExecutor {
                 return true;
             }
         }
+
         if ((args[0].equalsIgnoreCase("status") || args[0].equalsIgnoreCase("stats"))) {
             if (sender.hasPermission("farmcontrol.command.status")) {
                 return statusCommand.onCommand(sender, command, s, args);
@@ -54,6 +58,7 @@ public class FarmControlCommand implements CommandExecutor {
                 return true;
             }
         }
+
         if ((args[0].equalsIgnoreCase("history"))) {
             if (sender.hasPermission("farmcontrol.command.history")) {
                 return historyCommand.onCommand(sender, command, s, args);
@@ -62,6 +67,7 @@ public class FarmControlCommand implements CommandExecutor {
                 return true;
             }
         }
+
         if ((args[0].equalsIgnoreCase("notify"))) {
             if (sender.hasPermission("farmcontrol.command.notify")) {
                 return notifyCommand.onCommand(sender, command, s, args);
@@ -70,6 +76,7 @@ public class FarmControlCommand implements CommandExecutor {
                 return true;
             }
         }
+
         sendHelp(sender, s);
         return true;
     }
@@ -81,48 +88,52 @@ public class FarmControlCommand implements CommandExecutor {
         if (sender.hasPermission("farmcontrol.command.reload")) {
             sender.sendMessage("/" + cl + " reload");
         }
+
         if (sender.hasPermission("farmcontrol.command.status")) {
             sender.sendMessage("/" + cl + " status " + (sender instanceof Player ? "[world]" :"<world>"));
         }
+
         if (sender.hasPermission("farmcontrol.command.history")) {
             sender.sendMessage("/" + cl + " history ");
         }
+
         if (sender.hasPermission("farmcontrol.command.notify")) {
             sender.sendMessage("/" + cl + " notify ");
         }
     }
 
     public TabCompleter getTabCompleter() {
-        return new TabCompleter() {
-            @Override
-            public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                List<String> completions = new ArrayList<>();
-                if (args.length == 1) {
-                    if (sender.hasPermission("farmcontrol.command.reload")) {
-                        completions.add("reload");
-                    }
-                    if (sender.hasPermission("farmcontrol.command.status")) {
-                        completions.add("status");
-                    }
-                    if (sender.hasPermission("farmcontrol.command.history")) {
-                        completions.add("history");
-                    }
-                    if (sender.hasPermission("farmcontrol.command.notify")) {
-                        completions.add("notify");
-                    }
+        return (sender, command, s, args) -> {
+            List<String> completions = new ArrayList<>();
+            if (args.length == 1) {
+                if (sender.hasPermission("farmcontrol.command.reload")) {
+                    completions.add("reload");
                 }
-                if (args.length == 2) {
-                    if (args[0].equalsIgnoreCase("status") || args[0].equalsIgnoreCase("stats")) {
-                        if (sender.hasPermission("farmcontrol.command.status")) {
-                            for (World world : Bukkit.getWorlds()) {
-                                completions.add(world.getName());
-                            }
+
+                if (sender.hasPermission("farmcontrol.command.status")) {
+                    completions.add("status");
+                }
+
+                if (sender.hasPermission("farmcontrol.command.history")) {
+                    completions.add("history");
+                }
+
+                if (sender.hasPermission("farmcontrol.command.notify")) {
+                    completions.add("notify");
+                }
+            }
+
+            if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("status") || args[0].equalsIgnoreCase("stats")) {
+                    if (sender.hasPermission("farmcontrol.command.status")) {
+                        for (World world : Bukkit.getWorlds()) {
+                            completions.add(world.getName());
                         }
                     }
                 }
-                return StringUtil.copyPartialMatches(args[args.length - 1], completions, new ArrayList<>());
             }
+
+            return StringUtil.copyPartialMatches(args[args.length - 1], completions, new ArrayList<>());
         };
     }
-
 }

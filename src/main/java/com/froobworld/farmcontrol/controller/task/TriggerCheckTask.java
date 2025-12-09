@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class TriggerCheckTask implements Runnable {
+
     private final FarmControl farmControl;
     private final FarmController farmController;
     private final ExecutorService executorService;
@@ -33,7 +34,6 @@ public class TriggerCheckTask implements Runnable {
         );
         this.worldTriggerProfilesMap = worldTriggerProfilesMap;
     }
-
 
     public void run() {
         CycleTracker cycleTracker = farmController.getCycleHistoryManager().startCycleTracker(worldTriggerProfilesMap.keySet());
@@ -61,16 +61,19 @@ public class TriggerCheckTask implements Runnable {
             if (!profilesToRun.isEmpty() || !untriggerStrategyMap.isEmpty()) {
                 completableFuture = farmControl.getHookManager().getEntityGetterHook().getSnapshotEntities(world, FarmController.ENTITY_CLASSES);
             }
+
             completableFuture.thenAccept(snapshotEntities -> {
                 if (snapshotEntities == null || snapshotEntities.isEmpty()) {
                     cycleTracker.signalCompletion(world);
                     return;
                 }
+
                 if (!profilesToRun.isEmpty()) {
                     executorService.submit(new ActionAllocationTask(farmController, world, farmControl.getHookManager().getSchedulerHook(), triggeredTriggers, snapshotEntities, profilesToRun, farmControl.getExclusionManager().getExclusionPredicate(world), farmControl.getActionManager().getActions(), cycleTracker));
                 } else {
                     cycleTracker.signalCompletion(world);
                 }
+
                 if (!untriggerStrategyMap.isEmpty()) {
                     executorService.submit(new UntriggerAllocationTask(farmControl, farmController, snapshotEntities, untriggerStrategyMap));
                 }
@@ -81,5 +84,4 @@ public class TriggerCheckTask implements Runnable {
     public void stop() {
         executorService.shutdown();
     }
-
 }

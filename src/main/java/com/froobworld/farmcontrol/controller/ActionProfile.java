@@ -6,6 +6,7 @@ import com.froobworld.farmcontrol.group.GroupDefinition;
 import java.util.Set;
 
 public class ActionProfile {
+
     private final GroupDefinition groupDefinition;
     private final Set<Action> actions;
     private final boolean removes;
@@ -27,5 +28,4 @@ public class ActionProfile {
     public boolean removes() {
         return removes;
     }
-
 }

@@ -15,5 +15,4 @@ public interface MobGoalNmsHook {
     Set<Class<?>> getRandomMovementGoalClasses();
 
     boolean isCompatible();
-
 }

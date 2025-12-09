@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.*;
 
 public class MixedEntitySet implements Iterable<SnapshotEntity> {
+
     private final Comparator<SnapshotEntity> comparator;
     private final Set<SnapshotEntity> unclassifiedEntities;
     private final Map<Object, MixedEntitySet> classifiedEntityMap = new HashMap<>();
@@ -46,6 +47,7 @@ public class MixedEntitySet implements Iterable<SnapshotEntity> {
         for (MixedEntitySet subSet : classifiedEntityMap.values()) {
             size += subSet.size();
         }
+
         return size;
     }
 
@@ -70,11 +72,13 @@ public class MixedEntitySet implements Iterable<SnapshotEntity> {
             if (unclassifiedIterator.hasNext()) {
                 return true;
             }
+
             for (MixedEntityIterator subIterator : classifiedIteratorMap.values()) {
                 if (subIterator.hasNext()) {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -89,6 +93,7 @@ public class MixedEntitySet implements Iterable<SnapshotEntity> {
                     highestRemaining = nextIterator.getEffectiveRemaining();
                 }
             }
+
             lastUsedClassification = nextClassification;
             if (nextClassification == null) {
                 effectiveRemaining--;
@@ -103,6 +108,7 @@ public class MixedEntitySet implements Iterable<SnapshotEntity> {
             for (MixedEntityIterator iterator : classifiedIteratorMap.values()) {
                 effectiveRemaining += iterator.getEffectiveRemaining();
             }
+
             return effectiveRemaining;
         }
 
@@ -122,7 +128,5 @@ public class MixedEntitySet implements Iterable<SnapshotEntity> {
                 classifiedIteratorMap.get(lastUsedClassification).skipLast();
             }
         }
-
     }
-
 }

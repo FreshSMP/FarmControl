@@ -5,5 +5,4 @@ public interface ScheduledTask {
     void cancel();
 
     boolean isCancelled();
-
 }

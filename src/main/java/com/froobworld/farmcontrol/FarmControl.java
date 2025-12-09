@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 
 public class FarmControl extends JavaPlugin {
+
     private FcConfig fcConfig;
     private HookManager hookManager;
     private ActionManager actionManager;
@@ -28,6 +29,7 @@ public class FarmControl extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         hookManager = new HookManager(this);
         hookManager.load();
         actionManager = new ActionManager();
@@ -35,6 +37,7 @@ public class FarmControl extends JavaPlugin {
         triggerManager = new TriggerManager();
         triggerManager.addDefaults(this);
         profileManager = new ProfileManager(this);
+
         try {
             profileManager.load();
         } catch (IOException e) {
@@ -42,8 +45,10 @@ public class FarmControl extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+
         exclusionManager = new ExclusionManager(this);
         messageManager = new MessageManager(this);
+
         try {
             messageManager.reload();
         } catch (Exception e) {
@@ -51,6 +56,7 @@ public class FarmControl extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+
         farmController = new FarmController(this);
         farmController.load();
         farmController.register();
@@ -69,7 +75,6 @@ public class FarmControl extends JavaPlugin {
         messageManager.reload();
         farmController.reload();
         farmController.register();
-
     }
 
     public void onDisable() {
@@ -77,6 +82,7 @@ public class FarmControl extends JavaPlugin {
             farmController.unRegister();
             farmController.unload();
         }
+
         RemoveRandomMovementAction.cleanUp(this);
     }
 

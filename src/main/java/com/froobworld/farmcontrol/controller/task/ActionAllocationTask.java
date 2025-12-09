@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class ActionAllocationTask implements Runnable {
+
     private final FarmController farmController;
     private final World world;
     private final SchedulerHook schedulerHook;
@@ -61,16 +62,19 @@ public class ActionAllocationTask implements Runnable {
                         iterator.skipLast();
                         continue;
                     }
+
                     if (removes) {
                         snapshotEntities.remove(next);
                         iterator.remove();
                     }
+
                     Set<TriggerActionPair> triggerActionPairs = triggerActionMap.computeIfAbsent(next, e -> new HashSet<>());
                     Set<TriggerActionPair> unTriggerActionPairs = unTriggerActionMap.getOrDefault(next, Collections.emptySet());
                     for (Action action : triggerProfilePair.actionProfile.getActions()) {
                         if (!action.getEntityClass().isAssignableFrom(next.getEntityClass())) {
                             continue;
                         }
+
                         TriggerActionPair triggerActionPair = new TriggerActionPair(triggerProfilePair.trigger, action);
                         triggerActionPairs.add(triggerActionPair);
                         unTriggerActionPairs.remove(triggerActionPair);
@@ -78,6 +82,7 @@ public class ActionAllocationTask implements Runnable {
                 }
             }
         }
+
         for (SnapshotEntity entity : snapshotEntities) {
             FcData fcData = entity.getFcData();
             Set<String> appliedActions;
@@ -97,6 +102,7 @@ public class ActionAllocationTask implements Runnable {
     }
 
     private static class TriggerActionProfilePair {
+
         private final Trigger trigger;
         private final ActionProfile actionProfile;
 
@@ -105,5 +111,4 @@ public class ActionAllocationTask implements Runnable {
             this.actionProfile = actionProfile;
         }
     }
-
 }

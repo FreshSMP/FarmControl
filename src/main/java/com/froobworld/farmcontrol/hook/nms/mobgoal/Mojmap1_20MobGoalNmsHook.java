@@ -20,5 +20,4 @@ public class Mojmap1_20MobGoalNmsHook extends BaseMobGoalNmsHook {
                 )
         );
     }
-
 }

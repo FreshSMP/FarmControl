@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public class EntityCategory {
+
     private static final Map<String, EntityCategory> entityCategoryMap;
     private final String name;
     private final boolean allowInheritance;
@@ -24,6 +25,7 @@ public class EntityCategory {
                 entityCategories.add(new EntityCategory(entityType.toString().toLowerCase(), false, entityTypeClass));
             }
         }
+
         entityCategories.addAll(
                 List.of(
                         new EntityCategory("category:animal", true, Animals.class),
@@ -59,6 +61,7 @@ public class EntityCategory {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -70,6 +73,7 @@ public class EntityCategory {
         if (entityType.getEntityClass() == null) {
             return false;
         }
+
         return isMember(entityType.getEntityClass());
     }
 
@@ -86,11 +90,11 @@ public class EntityCategory {
                 }
             }
         }
+
         return false;
     }
 
     public static EntityCategory ofName(String categoryName) {
         return EntityCategory.entityCategoryMap.get(categoryName.toLowerCase());
     }
-
 }

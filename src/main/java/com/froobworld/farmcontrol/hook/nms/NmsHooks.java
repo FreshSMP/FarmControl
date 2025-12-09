@@ -10,6 +10,7 @@ import com.froobworld.farmcontrol.hook.nms.tick.TickTimesNmsHook;
 import java.util.stream.Stream;
 
 public class NmsHooks {
+
     private final MobGoalNmsHook mobGoalNmsHook;
     private final TickTimesNmsHook tickTimesNmsHook;
 

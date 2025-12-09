@@ -14,6 +14,7 @@ public class RemoveAwarenessAction extends Action {
         if (!(entity instanceof Mob mob)) {
             return;
         }
+
         mob.setAware(false);
     }
 
@@ -22,6 +23,7 @@ public class RemoveAwarenessAction extends Action {
         if (!(entity instanceof Mob mob)) {
             return;
         }
+
         mob.setAware(true);
     }
 }

@@ -9,7 +9,8 @@ import java.util.function.Predicate;
 
 public final class Actioner {
 
-    private Actioner() {}
+    private Actioner() {
+    }
 
     public static void undoAllActions(Entity entity, FarmControl farmControl) {
         undoActions(entity, action -> true, farmControl);
@@ -20,6 +21,7 @@ public final class Actioner {
         if (fcData == null) {
             return;
         }
+
         for (Action action : farmControl.getActionManager().getActions()) {
             if (actionUndoPredicate.test(action)) {
                 if (fcData.removeAction(action)) {
@@ -27,8 +29,8 @@ public final class Actioner {
                 }
             }
         }
+
         fcData.save(entity);
         FcData.removeIfEmpty(entity);
     }
-
 }

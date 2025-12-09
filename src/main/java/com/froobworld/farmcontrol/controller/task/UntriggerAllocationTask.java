@@ -12,6 +12,7 @@ import com.froobworld.farmcontrol.data.FcData;
 import java.util.*;
 
 public class UntriggerAllocationTask implements Runnable {
+
     private final FarmControl farmControl;
     private final FarmController farmController;
     private final List<SnapshotEntity> snapshotEntities;
@@ -33,22 +34,26 @@ public class UntriggerAllocationTask implements Runnable {
                 if (undos >= untriggerStrategy.getMaximumUndosPerCycle()) {
                     break;
                 }
+
                 FcData fcData = entity.getFcData();
                 if (fcData == null) {
                     continue;
                 }
+
                 Set<String> actionStrings = fcData.getActions(trigger);
                 if (actionStrings == null || actionStrings.isEmpty()) {
                     continue;
                 }
+
                 for (String actionName : actionStrings) {
                     Action action = farmControl.getActionManager().getAction(actionName);
                     actionsToUndo.computeIfAbsent(entity, k -> new HashSet<>()).add(new TriggerActionPair(trigger, action));
                 }
+
                 undos += untriggerStrategy.getEntityWeightFunction().apply(entity.getEntityType());
             }
         }
+
         farmController.submitUntriggerPerformTask(new UntriggerPerformTask(farmControl.getHookManager().getSchedulerHook(), actionsToUndo));
     }
-
 }

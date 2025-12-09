@@ -8,5 +8,4 @@ public class NumberOfWorldsChart extends SimplePie {
     public NumberOfWorldsChart() {
         super("number_of_worlds", () -> Bukkit.getWorlds().size() + "");
     }
-
 }

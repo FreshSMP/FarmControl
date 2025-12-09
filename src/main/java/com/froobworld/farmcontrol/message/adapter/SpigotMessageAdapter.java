@@ -11,6 +11,7 @@ public class SpigotMessageAdapter implements MessageAdapter {
         if (message == null) {
             throw new IllegalArgumentException("No message for key '" + messageKey + "'");
         }
+
         player.sendMessage(message);
     }
 
@@ -18,7 +19,7 @@ public class SpigotMessageAdapter implements MessageAdapter {
         if (messageKey.equalsIgnoreCase("breeding-disabled")) {
             return ChatColor.RED + "Breeding has been disabled for this animal.";
         }
+
         return null;
     }
-
 }

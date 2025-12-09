@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
 public class RegionisedSchedulerHook implements SchedulerHook {
+
     private final FarmControl farmControl;
 
     public RegionisedSchedulerHook(FarmControl farmControl) {
@@ -21,6 +22,7 @@ public class RegionisedSchedulerHook implements SchedulerHook {
         if (Bukkit.isGlobalTickThread()) {
             runnable.run();
         }
+
         return runTask(runnable);
     }
 
@@ -41,7 +43,8 @@ public class RegionisedSchedulerHook implements SchedulerHook {
             runnable.run();
             return new ScheduledTask() {
                 @Override
-                public void cancel() {}
+                public void cancel() {
+                }
 
                 @Override
                 public boolean isCancelled() {
@@ -49,6 +52,7 @@ public class RegionisedSchedulerHook implements SchedulerHook {
                 }
             };
         }
+
         return runEntityTask(runnable, retired, entity);
     }
 
@@ -58,10 +62,12 @@ public class RegionisedSchedulerHook implements SchedulerHook {
         } catch (ClassNotFoundException e) {
             return false;
         }
+
         return true;
     }
 
     private static class RegionisedScheduledTask implements ScheduledTask {
+
         private final io.papermc.paper.threadedregions.scheduler.ScheduledTask scheduledTask;
 
         private RegionisedScheduledTask(io.papermc.paper.threadedregions.scheduler.ScheduledTask scheduledTask) {
@@ -78,5 +84,4 @@ public class RegionisedSchedulerHook implements SchedulerHook {
             return scheduledTask.isCancelled();
         }
     }
-
 }

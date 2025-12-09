@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TriggerManager {
-    private Map<String, Trigger> triggers = new HashMap<>();
+
+    private final Map<String, Trigger> triggers = new HashMap<>();
 
     public void addDefaults(FarmControl farmControl) {
         addTrigger(new ProactiveTrigger());
@@ -23,5 +24,4 @@ public class TriggerManager {
     public Trigger getTrigger(String triggerName) {
         return triggers.get(triggerName);
     }
-
 }

@@ -25,8 +25,8 @@ public class ProactiveActionsChart extends SimpleBarChart {
                     }
                 }
             }
+
             return actionMap;
         });
     }
-
 }

@@ -4,7 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 public final class DurationDisplayer {
 
-    private DurationDisplayer() {}
+    private DurationDisplayer() {
+    }
 
     private static String quantityText(int quantity, String singularSuffix, String pluralSuffix) {
         String quantityText = quantity + "";
@@ -37,17 +38,18 @@ public final class DurationDisplayer {
         if (timeInSeconds == 0 && timeInMinutes == 0) {
             return "less than a second";
         }
+
         String minutePart = quantityText((int) timeInMinutes, " minute", " minutes");
         String secondPart = (timeInMinutes > 0 ? " and " : "") + quantityText((int) timeInSeconds, " second", " seconds");
         String result = "";
         if (timeInMinutes > 0) {
             result += minutePart;
         }
+
         if (timeInSeconds > 0) {
             result += secondPart;
         }
 
         return result;
     }
-
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProtoGroup {
+
     private final EntityType initialType;
     private final int initialChunkX, initialChunkZ;
     private final GroupDefinition definition;
@@ -41,9 +42,11 @@ public class ProtoGroup {
         if (definition.isPure() && entity.getEntityType() != initialType) {
             return false;
         }
+
         if (definition.isSameChunk()) {
             return entity.getLocation().getBlockX() >> 4 == initialChunkX && entity.getLocation().getBlockZ() >> 4 == initialChunkZ;
         }
+
         int remainingMembers = members.size();
         int minDistance = -1;
         for (SnapshotEntity member : members) {
@@ -55,16 +58,18 @@ public class ProtoGroup {
                             Math.abs(member.getLocation().getBlockZ() - entity.getLocation().getBlockZ())
                     )
             );
+
             if (minDistance < 0 || distance < minDistance) {
                 minDistance = distance;
             }
+
             if (distance <= definition.getDistance()) {
                 return true;
             } else if (minDistance > (remainingMembers + 1) * definition.getDistance()) {
                 return false;
             }
         }
+
         return false;
     }
-
 }

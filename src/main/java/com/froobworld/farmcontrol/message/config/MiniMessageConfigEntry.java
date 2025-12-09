@@ -10,5 +10,4 @@ public class MiniMessageConfigEntry extends ConfigEntry<Component> {
     public MiniMessageConfigEntry(TagResolver... tagResolvers) {
         super(string -> MiniMessage.miniMessage().deserialize((String) string, tagResolvers));
     }
-
 }

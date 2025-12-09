@@ -5,6 +5,7 @@ import org.bukkit.entity.EntityType;
 import java.util.function.Function;
 
 public class UntriggerStrategy {
+
     private final int maximumUndosPerCycle;
 
     private final Function<EntityType, Double> entityWeight;
@@ -27,5 +28,4 @@ public class UntriggerStrategy {
     public int getMinimumCyclesBeforeUndo() {
         return minimumCyclesBeforeUndo;
     }
-
 }
