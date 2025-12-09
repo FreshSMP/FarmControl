@@ -15,11 +15,11 @@ public class DisableBreedingAction extends Action {
 
     @Override
     public void doAction(Entity entity) {
-        if (!(entity instanceof Mob)) {
+        if (!(entity instanceof Mob mob)) {
             return;
         }
 
-        breedingBlocker.setBreedingDisabled(entity, true);
+        breedingBlocker.setBreedingDisabled(mob, true);
     }
 
     @Override

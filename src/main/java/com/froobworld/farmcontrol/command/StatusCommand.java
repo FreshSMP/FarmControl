@@ -30,8 +30,8 @@ public class StatusCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String cl, @NotNull String[] args) {
         World world;
         if (args.length == 1) {
-            if (sender instanceof Player) {
-                world = ((Player) sender).getWorld();
+            if (sender instanceof Player player) {
+                world = player.getWorld();
             } else {
                 sender.sendMessage(ChatColor.RED + "You must specify a world.");
                 return false;

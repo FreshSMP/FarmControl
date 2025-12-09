@@ -18,6 +18,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class BreedingBlocker implements Listener {
+
     private static final long MESSAGE_RATE_LIMIT = TimeUnit.MILLISECONDS.toMillis(500);
     private final FarmControl farmControl;
     private final Map<Player, Map<UUID, Long>> lastMessage = new MapMaker().weakKeys().makeMap();

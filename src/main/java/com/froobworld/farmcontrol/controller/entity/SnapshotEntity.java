@@ -39,33 +39,33 @@ public class SnapshotEntity {
         this.entityId = entity.getEntityId();
         this.location = entity.getLocation().toVector();
         this.fcData = FcData.get(entity);
-        this.leashed = entity instanceof Mob && ((Mob) entity).isLeashed();
-        this.loveMode = entity instanceof Animals && ((Animals) entity).isLoveMode();
+        this.leashed = entity instanceof Mob mob && mob.isLeashed();
+        this.loveMode = entity instanceof Animals animals && animals.isLoveMode();
         this.customName = entity.getCustomName() != null;
-        this.tamed = entity instanceof Tameable && ((Tameable) entity).isTamed();
-        this.isPatrolLeader = entity instanceof Raider && ((Raider) entity).isPatrolLeader();
-        this.pickupable = entity instanceof AbstractArrow && ((AbstractArrow) entity).getPickupStatus() == AbstractArrow.PickupStatus.ALLOWED;
+        this.tamed = entity instanceof Tameable tameable && tameable.isTamed();
+        this.isPatrolLeader = entity instanceof Raider raider && raider.isPatrolLeader();
+        this.pickupable = entity instanceof AbstractArrow abstractArrow && abstractArrow.getPickupStatus() == AbstractArrow.PickupStatus.ALLOWED;
         this.ticksLived = entity.getTicksLived();
         this.mounted = !entity.getPassengers().isEmpty();
         classifications.add(entity.getType());
 
-        if (entity instanceof Colorable) {
-            DyeColor colour = ((Colorable) entity).getColor();
+        if (entity instanceof Colorable colorable) {
+            DyeColor colour = colorable.getColor();
             if (colour != null) {
                 classifications.add(colour);
             }
         }
 
-        if (entity instanceof Villager) {
-            classifications.add(((Villager) entity).getProfession());
+        if (entity instanceof Villager villager) {
+            classifications.add(villager.getProfession());
         }
 
-        if (entity instanceof Item) {
-            classifications.add(((Item) entity).getItemStack().getType());
+        if (entity instanceof Item item) {
+            classifications.add(item.getItemStack().getType());
         }
 
-        if (entity instanceof Boat) {
-            classifications.add(((Boat) entity).getBoatMaterial());
+        if (entity instanceof Boat boat) {
+            classifications.add(boat.getBoatMaterial());
         }
     }
 

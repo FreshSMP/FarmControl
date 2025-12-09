@@ -66,8 +66,8 @@ public class NotificationCentre {
 
     public void setNotifiable(CommandSender sender, boolean notifiable) {
         UUID uuid;
-        if (sender instanceof Player) {
-            uuid = ((Player) sender).getUniqueId();
+        if (sender instanceof Player player) {
+            uuid = player.getUniqueId();
         } else {
             uuid = CONSOLE_UUID;
         }
@@ -83,8 +83,8 @@ public class NotificationCentre {
 
     public boolean isNotifiable(CommandSender sender) {
         UUID uuid;
-        if (sender instanceof Player) {
-            uuid = ((Player) sender).getUniqueId();
+        if (sender instanceof Player player) {
+            uuid = player.getUniqueId();
         } else {
             uuid = CONSOLE_UUID;
         }
