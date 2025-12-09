@@ -2,17 +2,24 @@ package com.froobworld.farmcontrol.controller.entity;
 
 import com.froobworld.farmcontrol.data.FcData;
 import org.bukkit.DyeColor;
-import org.bukkit.entity.*;
+import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Mob;
+import org.bukkit.entity.Raider;
+import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Villager;
 import org.bukkit.material.Colorable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SnapshotEntity {
 
-    private static final AtomicBoolean useWoodType = new AtomicBoolean(false);
     private final Entity entity;
     private final int entityId;
     private final Vector location;
@@ -58,18 +65,7 @@ public class SnapshotEntity {
         }
 
         if (entity instanceof Boat) {
-            // try to add boat type, falling back to wood type for version < 1.19
-            if (!SnapshotEntity.useWoodType.get()) {
-                try {
-                    classifications.add(((Boat) entity).getBoatType());
-                } catch (Throwable throwable) {
-                    useWoodType.set(true);
-                }
-            }
-
-            if (SnapshotEntity.useWoodType.get()) {
-                classifications.add(((Boat) entity).getWoodType());
-            }
+            classifications.add(((Boat) entity).getBoatMaterial());
         }
     }
 
